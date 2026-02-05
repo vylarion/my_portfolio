@@ -41,6 +41,7 @@
     height: 100%;
     object-fit: cover;
     transition: opacity 0.3s ease;
+    filter: contrast(1.2) brightness(1.01);
 }
 
 .project-image-overlay {

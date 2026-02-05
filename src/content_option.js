@@ -100,9 +100,9 @@ const contactConfig = {
 
 const socialprofils = {
     github: "https://github.com/vylarion",
-    instagram: "https://instagram.com",
-    linkedin: "https://linkedin.com",
-    twitter: "https://twitter.com",
+    instagram: "https://www.instagram.com/vylarion.hkx/",
+    linkedin: "https://www.linkedin.com/in/vylarion/",
+
 };
 export {
     meta,
