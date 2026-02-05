@@ -7,138 +7,87 @@ const meta = {
 const introdata = {
     title: "I’m Samya Halder",
     animated: {
-        first: "I love coding",
-        second: "I code cool websites",
-        third: "I develop mobile apps",
+        first: "Cybersecurity Guy",
+        second: "Penetration Tester",
+        third: "Purple Teamer",
+        fourth: "Security Analyst",
     },
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum",
+    description: "I am a cybersecurity professional with experience in penetration testing and security operations. I am passionate about cybersecurity and am always looking for new challenges.",
     your_img_url: "https://res.cloudinary.com/dduwbdgc1/image/upload/v1757512792/DSC02407-2_lw2wzq.jpg",
 };
 
 const dataabout = {
-    title: "abit about my self",
-    aboutme: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis dolor id ligula semper elementum feugiat pretium nulla. Nunc non commodo dolor. Nunc mollis dignissim facilisis. Morbi ut magna ultricies.",
+    title: "",
+    aboutme: "I break systems to make them stronger. Specializing in penetration testing and purple team operations, I bridge the gap between offense and defense—finding vulnerabilities, hardening infrastructure, and building security tools that make a difference.",
 };
 const worktimeline = [{
-        jobtitle: "Designer of week",
-        where: "YAdfi",
-        date: "2020",
-    },
-    {
-        jobtitle: "Designer of week",
-        where: "Jamalya",
-        date: "2019",
-    },
-    {
-        jobtitle: "Designer of week",
-        where: "ALquds",
-        date: "2019",
-    },
+    jobtitle: "Security Analyst",
+    where: "Cybersecurity Operations",
+    date: "August 2025 - November 2025",
+},
+    // {
+    //     jobtitle: "Penetration Tester",
+    //     where: "Security Assessment Team",
+    //     date: "2022 - 2023",
+    // },
+    // {
+    //     jobtitle: "Junior Security Researcher",
+    //     where: "Threat Intelligence",
+    //     date: "2021 - 2022",
+    // },
 ];
 
-const skills = [{
-        name: "Python",
-        value: 90,
-    },
-    {
-        name: "Djano",
-        value: 85,
-    },
-    {
-        name: "Javascript",
-        value: 80,
-    },
-    {
-        name: "React",
-        value: 60,
-    },
-    {
-        name: "Jquery",
-        value: 85,
-    },
+const skills = [
+    { name: "Python" },
+    { name: "Penetration Testing" },
+    { name: "Incident Response" },
+    { name: "Log Analysis" },
+    { name: "Network Security" },
 ];
 
 const services = [{
-        title: "UI & UX Design",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum sollicitudin.",
-    },
-    {
-        title: "Mobile Apps",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum sollicitudin.",
-    },
-    {
-        title: "Wordpress Design",
-        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum sollicitudin.",
-    },
+    title: "UI & UX Design",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum sollicitudin.",
+},
+{
+    title: "Mobile Apps",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum sollicitudin.",
+},
+{
+    title: "Wordpress Design",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum sollicitudin.",
+},
 ];
 
-const dataprojecs = [{
-        img: "https://picsum.photos/400/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/800/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/600/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/300/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/700/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-
-    {
-        img: "https://picsum.photos/400/600/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/300/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/550/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-    {
-        img: "https://picsum.photos/400/700/?grayscale",
-        description: "The wisdom of life consists in the elimination of non-essentials.",
-        link: "#",
-    },
-];
+const dataprojects = [{
+    title: "Reconborne",
+    category: "Tool",
+    description: "An advanced, AI-driven reconnaissance tool for cybersecurity professionals. Performs technology stack detection, SSL/TLS analysis, subdomain enumeration, and vulnerability correlation.",
+    tech: ["Python", "Gemini API", "Wireshark", "Nmap"],
+    link: "https://github.com/vylarion/reconborne",
+    img: "https://picsum.photos/400/400?grayscale",
+},
+{
+    title: "Loxtention",
+    category: "Browser Extension",
+    description: "A Chrome extension for real-time website security analysis and threat detection. Provides multi-layered protection against malicious content, phishing, and trackers.",
+    tech: ["Svelte", "TypeScript", "FastAPI", "AI"],
+    link: "https://github.com/vylarion/Loxtention",
+    img: "https://picsum.photos/400/400?grayscale&random=2",
+},
+{
+    title: "Portfolio Website",
+    category: "Web Development",
+    description: "A minimalist portfolio showcasing projects, skills, and professional experience. Features smooth animations, dark mode aesthetics, and a clean, modern interface built with React.",
+    tech: ["React", "JavaScript", "CSS"],
+    link: "/",
+    img: "https://picsum.photos/400/400?grayscale&random=3",
+}];
 
 const contactConfig = {
-    YOUR_EMAIL: "name@domain.com",
-    YOUR_FONE: "(555)123-4567",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vehicula eu nunc et sollicitudin. Cras pulvinar, nisi at imperdiet pharetra. ",
+    YOUR_EMAIL: "vylarionhx@gmail.com",
+    YOUR_FONE: "+91 7980026875",
+    description: "Please don't contact. I am very lazy! ",
     // creat an emailjs.com account 
     // check out this tutorial https://www.emailjs.com/docs/examples/reactjs/
     YOUR_SERVICE_ID: "service_id",
@@ -147,7 +96,7 @@ const contactConfig = {
 };
 
 const socialprofils = {
-    github: "https://github.com",
+    github: "https://github.com/vylarion",
     instagram: "https://instagram.com",
     linkedin: "https://linkedin.com",
     twitter: "https://twitter.com",
@@ -155,7 +104,7 @@ const socialprofils = {
 export {
     meta,
     dataabout,
-    dataprojecs,
+    dataprojects,
     worktimeline,
     skills,
     services,

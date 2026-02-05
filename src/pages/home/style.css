@@ -40,7 +40,7 @@ section {
 @media (max-width:991.98px) {
     .intro_sec {
         display: block;
-        height: auto!important;
+        height: auto !important;
     }
 }
 
@@ -63,6 +63,7 @@ section {
 }
 
 @media (max-width:991.98px) {
+
     .intro_sec .text,
     .intro_sec .h_bg-image {
         width: 100%;
@@ -91,7 +92,7 @@ section {
 }
 
 .intro_sec .intro .feature .wrap-icon {
-    background: 0 0!important;
+    background: 0 0 !important;
     width: auto;
     height: auto;
     margin-bottom: 0;
@@ -105,6 +106,19 @@ section {
     font-size: 30px;
     margin-bottom: 50px;
     font-weight: 700;
+}
+
+/* Make Typewriter display inline with "The " */
+.intro_sec .text h1 .Typewriter {
+    display: inline;
+}
+
+.intro_sec .text h1 .Typewriter__wrapper {
+    display: inline;
+}
+
+.intro_sec .text h1 .Typewriter__cursor {
+    display: inline;
 }
 
 .intro_sec .text h3 {
@@ -219,6 +233,7 @@ section {
         min-height: 75vh;
         margin-bottom: 30px;
     }
+
     .intro_sec .h_bg-image .block {
         top: unset;
         bottom: 0;

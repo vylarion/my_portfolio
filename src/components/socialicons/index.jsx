@@ -13,10 +13,11 @@ import {
   FaCircle
 } from "react-icons/fa";
 import { socialprofils } from "../../content_option";
+import { useLocation } from "react-router-dom";
 
 const ICON_MAPPING = {
   default: FaCircle,
-  
+
   github: FaGithub,
   instagram: FaInstagram,
   linkedin: FaLinkedin,
@@ -28,8 +29,11 @@ const ICON_MAPPING = {
 };
 
 export const Socialicons = (params) => {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+
   return (
-    <div className="stick_follow_icon">
+    <div className={`stick_follow_icon ${isHomePage ? "home-icons" : ""}`}>
       <ul>
         {Object.entries(socialprofils).map(([platform, url]) => {
           const IconComponent = ICON_MAPPING[platform] || ICON_MAPPING.default;

@@ -52,6 +52,19 @@
     background-color: var(--text-color);
 }
 
+/* Force light icons on home page regardless of theme */
+.stick_follow_icon.home-icons svg {
+    fill: #fff;
+}
+
+.stick_follow_icon.home-icons p {
+    color: #fff;
+}
+
+.stick_follow_icon.home-icons p:after {
+    background-color: #fff;
+}
+
 @media only screen and (max-width: 991px) {
     .stick_follow_icon {
         width: unset;
