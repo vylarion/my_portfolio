@@ -37,7 +37,6 @@ export const ContactUs = () => {
       )
       .then(
         (result) => {
-          console.log(result.text);
           setFormdata({
             loading: false,
             alertmessage: "SUCCESS! ,Thankyou for your messege",
@@ -46,7 +45,6 @@ export const ContactUs = () => {
           });
         },
         (error) => {
-          console.log(error.text);
           setFormdata({
             alertmessage: `Faild to send!,${error.text}`,
             variant: "danger",
@@ -83,9 +81,8 @@ export const ContactUs = () => {
             <Alert
               //show={formData.show}
               variant={formData.variant}
-              className={`rounded-0 co_alert ${
-                formData.show ? "d-block" : "d-none"
-              }`}
+              className={`rounded-0 co_alert ${formData.show ? "d-block" : "d-none"
+                }`}
               onClose={() => setFormdata({ show: false })}
               dismissible
             >

@@ -1,7 +1,7 @@
 const logotext = "VYLARION";
 const meta = {
-    title: "Samya Halder",
-    description: "I’m Samya Halder data scientist _ Full stack devloper,currently working in Berlin",
+    title: "VYLARION",
+    description: "Cybersecurity professional specializing in penetration testing, purple team operations, and security tool development. Portfolio showcasing reconnaissance tools and security projects.",
 };
 
 const introdata = {
@@ -45,7 +45,8 @@ const skills = [
     { name: "Network Security" },
 ];
 
-const services = [{
+// Services section currently disabled - contains placeholder content
+/* const services = [{
     title: "UI & UX Design",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum sollicitudin.",
 },
@@ -57,7 +58,9 @@ const services = [{
     title: "Wordpress Design",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed at nisl euismod urna bibendum sollicitudin.",
 },
-];
+]; */
+
+const services = [];
 
 const dataprojects = [{
     title: "Reconborne",
