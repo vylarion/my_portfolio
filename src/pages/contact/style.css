@@ -17,6 +17,40 @@
     height: calc(2.5em + .75rem + 2px);
 }
 
+/* Make placeholders more visible in dark theme */
+.contact__form .form-control::placeholder {
+    opacity: 0.65;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.contact__form textarea.form-control::placeholder {
+    opacity: 0.65;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+/* Keep placeholders normal in light theme */
+[data-theme="light"] .contact__form .form-control::placeholder {
+    opacity: 0.5;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .contact__form textarea.form-control::placeholder {
+    opacity: 0.5;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+/* Make email address look like normal text instead of a link */
+address a {
+    color: var(--text-color);
+    text-decoration: none;
+    cursor: text;
+}
+
+address a:hover {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
 button.btn.ac_btn:hover {
     color: var(--secondary-color);
 }
