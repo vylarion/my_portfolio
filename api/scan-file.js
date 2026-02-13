@@ -1,6 +1,5 @@
 // Vercel Serverless Function: File Scan
-// Receives a file upload and submits it to VirusTotal for scanning
-const https = require("https");
+import https from "https";
 
 function vtRequest(options, body) {
     return new Promise((resolve, reject) => {
@@ -21,25 +20,22 @@ function vtRequest(options, body) {
     });
 }
 
-module.exports = async (req, res) => {
-    // CORS
+export const config = {
+    api: {
+        bodyParser: false,
+    },
+};
+
+export default async function handler(req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*");
 
-    if (req.method === "OPTIONS") {
-        return res.status(200).end();
-    }
-
-    if (req.method !== "POST") {
-        return res.status(405).json({ error: "Method not allowed" });
-    }
+    if (req.method === "OPTIONS") return res.status(200).end();
+    if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
     const apiKey = process.env.VT_API_KEY;
-    if (!apiKey) {
-        return res.status(500).json({ error: "API key not configured" });
-    }
+    if (!apiKey) return res.status(500).json({ error: "API key not configured" });
 
     try {
-        // Read the raw body
         const chunks = [];
         await new Promise((resolve, reject) => {
             req.on("data", (chunk) => chunks.push(chunk));
@@ -52,7 +48,6 @@ module.exports = async (req, res) => {
             return res.status(400).json({ error: "No file data received" });
         }
 
-        // Build multipart form data
         const boundary = "----VTBoundary" + Date.now();
         const filename = req.headers["x-filename"] || "uploaded_file";
 
@@ -62,7 +57,6 @@ module.exports = async (req, res) => {
         const footer = Buffer.from(`\r\n--${boundary}--\r\n`);
         const formBody = Buffer.concat([header, buffer, footer]);
 
-        // Upload to VirusTotal
         const vtResult = await vtRequest(
             {
                 hostname: "www.virustotal.com",
@@ -92,10 +86,4 @@ module.exports = async (req, res) => {
         console.error("Scan file error:", err);
         return res.status(500).json({ error: err.message || "Internal server error" });
     }
-};
-
-module.exports.config = {
-    api: {
-        bodyParser: false,
-    },
-};
+}

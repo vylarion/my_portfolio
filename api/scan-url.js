@@ -1,6 +1,5 @@
 // Vercel Serverless Function: URL Scan
-// Receives a URL and submits it to VirusTotal for scanning
-const https = require("https");
+import https from "https";
 
 function vtRequest(options, body) {
     return new Promise((resolve, reject) => {
@@ -21,31 +20,20 @@ function vtRequest(options, body) {
     });
 }
 
-module.exports = async (req, res) => {
-    // CORS
+export default async function handler(req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*");
 
-    if (req.method === "OPTIONS") {
-        return res.status(200).end();
-    }
-
-    if (req.method !== "POST") {
-        return res.status(405).json({ error: "Method not allowed" });
-    }
+    if (req.method === "OPTIONS") return res.status(200).end();
+    if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
 
     const apiKey = process.env.VT_API_KEY;
-    if (!apiKey) {
-        return res.status(500).json({ error: "API key not configured" });
-    }
+    if (!apiKey) return res.status(500).json({ error: "API key not configured" });
 
     try {
         const { url } = req.body || {};
 
-        if (!url) {
-            return res.status(400).json({ error: "URL is required" });
-        }
+        if (!url) return res.status(400).json({ error: "URL is required" });
 
-        // Normalize the URL
         let normalizedUrl = url.trim();
         if (!normalizedUrl.startsWith("http://") && !normalizedUrl.startsWith("https://")) {
             normalizedUrl = "https://" + normalizedUrl;
@@ -83,4 +71,4 @@ module.exports = async (req, res) => {
         console.error("Scan URL error:", err);
         return res.status(500).json({ error: err.message || "Internal server error" });
     }
-};
+}
