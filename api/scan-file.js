@@ -1,13 +1,7 @@
 // Vercel Serverless Function: File Scan
 // Receives a file upload and submits it to VirusTotal for scanning
 
-export const config = {
-    api: {
-        bodyParser: false, // We need raw body for file upload
-    },
-};
-
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     if (req.method !== "POST") {
         return res.status(405).json({ error: "Method not allowed" });
     }
@@ -25,14 +19,9 @@ export default async function handler(req, res) {
         }
         const buffer = Buffer.concat(chunks);
 
-        // Parse the multipart form data manually
-        // The Content-Type header contains the boundary
-        const contentType = req.headers["content-type"] || "";
-
         // Forward the file to VirusTotal as multipart/form-data
         const boundary = "----VTBoundary" + Date.now();
-        const filename =
-            req.headers["x-filename"] || "uploaded_file";
+        const filename = req.headers["x-filename"] || "uploaded_file";
 
         const formDataParts = [
             `--${boundary}\r\n`,
@@ -68,7 +57,6 @@ export default async function handler(req, res) {
 
         const data = await vtResponse.json();
 
-        // Return the analysis ID so the frontend can poll for results
         return res.status(200).json({
             analysisId: data.data?.id,
             type: "file",
@@ -77,4 +65,11 @@ export default async function handler(req, res) {
         console.error("Scan file error:", err);
         return res.status(500).json({ error: "Internal server error" });
     }
-}
+};
+
+// Disable body parsing so we get the raw buffer
+module.exports.config = {
+    api: {
+        bodyParser: false,
+    },
+};

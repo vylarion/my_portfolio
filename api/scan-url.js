@@ -1,7 +1,7 @@
 // Vercel Serverless Function: URL Scan
 // Receives a URL and submits it to VirusTotal for scanning
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     if (req.method !== "POST") {
         return res.status(405).json({ error: "Method not allowed" });
     }
@@ -57,4 +57,4 @@ export default async function handler(req, res) {
         console.error("Scan URL error:", err);
         return res.status(500).json({ error: "Internal server error" });
     }
-}
+};

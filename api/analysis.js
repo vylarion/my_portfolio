@@ -1,7 +1,7 @@
 // Vercel Serverless Function: Get Analysis Results
 // Polls VirusTotal for scan results using an analysis ID
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     if (req.method !== "GET") {
         return res.status(405).json({ error: "Method not allowed" });
     }
@@ -49,8 +49,6 @@ export default async function handler(req, res) {
         }
 
         // Analysis is complete — get the full report
-        // The analysis contains a meta.file_info or meta.url_info
-        // with the resource ID for the full report
         const stats = analysisData.data?.attributes?.stats;
         const results = analysisData.data?.attributes?.results;
         const meta = analysisData.data?.meta || {};
@@ -61,7 +59,6 @@ export default async function handler(req, res) {
         const urlInfo = meta.url_info;
 
         if (fileInfo?.sha256) {
-            // Get full file report
             const fileResponse = await fetch(
                 `https://www.virustotal.com/api/v3/files/${fileInfo.sha256}`,
                 {
@@ -72,7 +69,6 @@ export default async function handler(req, res) {
                 fullReport = await fileResponse.json();
             }
         } else if (urlInfo?.id) {
-            // Get full URL report
             const urlResponse = await fetch(
                 `https://www.virustotal.com/api/v3/urls/${urlInfo.id}`,
                 {
@@ -84,7 +80,6 @@ export default async function handler(req, res) {
             }
         }
 
-        // Return the comprehensive results
         return res.status(200).json({
             status: "completed",
             completed: true,
@@ -98,4 +93,4 @@ export default async function handler(req, res) {
         console.error("Analysis error:", err);
         return res.status(500).json({ error: "Internal server error" });
     }
-}
+};
