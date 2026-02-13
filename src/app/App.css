@@ -4,17 +4,23 @@
     }
 }
 
+/* Page transition wrapper */
+.page-wrap {
+    width: 100%;
+}
+
+/* Fade transition — smooth and non-buggy */
 .page-enter {
-    transform: translateY(100%);
+    opacity: 0;
 }
 
 .page-enter-active {
-    transform: translateY(0%);
-    transition: all 400ms ease-out;
+    opacity: 1;
+    transition: opacity 400ms ease-in;
 }
 
 .page-exit {
-    transform: translateY(0%);
+    opacity: 1;
     position: absolute;
     left: 0;
     right: 0;
@@ -22,15 +28,16 @@
 }
 
 .page-exit-active {
+    opacity: 0;
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
-    transform: translateY(-130%);
-    transition: all 400ms ease-out;
+    transition: opacity 300ms ease-out;
 }
 
 @media (min-width: 1400px) {
+
     .container,
     .container-lg,
     .container-md,

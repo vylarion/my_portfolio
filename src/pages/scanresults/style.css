@@ -317,56 +317,8 @@
     font-style: italic;
 }
 
-/* ── Light Theme ────────────────────────────────── */
 
-[data-theme="light"] .sr-stat-card {
-    border-color: rgba(0, 0, 0, 0.1);
-}
 
-[data-theme="light"] .sr-stat--detections {
-    border-color: rgba(204, 0, 0, 0.2);
-}
-
-[data-theme="light"] .sr-section-title {
-    border-bottom-color: rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="light"] .sr-details-grid {
-    background: rgba(0, 0, 0, 0.04);
-    border-color: rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="light"] .sr-detail {
-    background: var(--bg-color);
-}
-
-[data-theme="light"] .sr-tag {
-    border-color: rgba(0, 0, 0, 0.15);
-}
-
-[data-theme="light"] .sr-table-wrap {
-    border-color: rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="light"] .sr-table thead {
-    border-bottom-color: rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="light"] .sr-table td {
-    border-bottom-color: rgba(0, 0, 0, 0.04);
-}
-
-[data-theme="light"] .sr-row--malicious {
-    background: rgba(204, 0, 0, 0.04);
-}
-
-[data-theme="light"] .sr-row--suspicious {
-    background: rgba(251, 191, 36, 0.04);
-}
-
-[data-theme="light"] .sr-verdict--undetected {
-    border-color: rgba(0, 0, 0, 0.1);
-}
 
 /* ── Responsive ─────────────────────────────────── */
 

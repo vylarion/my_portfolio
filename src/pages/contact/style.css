@@ -28,16 +28,6 @@
     color: rgba(255, 255, 255, 0.65);
 }
 
-/* Keep placeholders normal in light theme */
-[data-theme="light"] .contact__form .form-control::placeholder {
-    opacity: 0.5;
-    color: rgba(0, 0, 0, 0.5);
-}
-
-[data-theme="light"] .contact__form textarea.form-control::placeholder {
-    opacity: 0.5;
-    color: rgba(0, 0, 0, 0.5);
-}
 
 /* Make email address look like normal text instead of a link */
 address a {

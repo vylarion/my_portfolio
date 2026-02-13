@@ -38,10 +38,8 @@
     opacity: 0.85;
 }
 
-[data-theme="light"] .table td,
-[data-theme="light"] .table th {
-    border-color: rgba(0, 0, 0, 0.1);
-}
+
+
 
 .t_border {
     border-color: var(--text-color) !important;

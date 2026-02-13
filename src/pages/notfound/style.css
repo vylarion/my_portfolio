@@ -1,0 +1,55 @@
+.not-found {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 24px;
+}
+
+.not-found-content {
+    max-width: 400px;
+}
+
+.not-found-code {
+    font-family: 'Marcellus', serif;
+    font-size: 72px;
+    font-weight: 400;
+    line-height: 1;
+    margin-bottom: 8px;
+    opacity: 0.15;
+}
+
+.not-found-title {
+    font-family: 'Marcellus', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 12px;
+}
+
+.not-found-text {
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px;
+    opacity: 0.5;
+    margin-bottom: 28px;
+    line-height: 1.6;
+}
+
+.not-found-link {
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-color);
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 24px;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.not-found-link:hover {
+    border-color: var(--text-color);
+    background: var(--text-color);
+    color: var(--bg-color);
+}
