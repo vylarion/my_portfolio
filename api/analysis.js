@@ -1,7 +1,43 @@
 // Vercel Serverless Function: Get Analysis Results
 // Polls VirusTotal for scan results using an analysis ID
+const https = require("https");
 
-module.exports = async function handler(req, res) {
+function vtGet(path, apiKey) {
+    return new Promise((resolve, reject) => {
+        const req = https.request(
+            {
+                hostname: "www.virustotal.com",
+                path: path,
+                method: "GET",
+                headers: {
+                    "x-apikey": apiKey,
+                },
+            },
+            (res) => {
+                let data = "";
+                res.on("data", (chunk) => (data += chunk));
+                res.on("end", () => {
+                    try {
+                        resolve({ status: res.statusCode, data: JSON.parse(data) });
+                    } catch (e) {
+                        reject(new Error("Invalid JSON from VirusTotal"));
+                    }
+                });
+            }
+        );
+        req.on("error", reject);
+        req.end();
+    });
+}
+
+module.exports = async (req, res) => {
+    // CORS
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
+    if (req.method === "OPTIONS") {
+        return res.status(200).end();
+    }
+
     if (req.method !== "GET") {
         return res.status(405).json({ error: "Method not allowed" });
     }
@@ -19,65 +55,51 @@ module.exports = async function handler(req, res) {
         }
 
         // Get the analysis results
-        const analysisResponse = await fetch(
-            `https://www.virustotal.com/api/v3/analyses/${id}`,
-            {
-                headers: {
-                    "x-apikey": apiKey,
-                },
-            }
-        );
+        const analysisResult = await vtGet("/api/v3/analyses/" + encodeURIComponent(id), apiKey);
 
-        if (!analysisResponse.ok) {
-            const errorText = await analysisResponse.text();
-            console.error("VT analysis error:", analysisResponse.status, errorText);
-            return res.status(analysisResponse.status).json({
+        if (analysisResult.status >= 400) {
+            return res.status(analysisResult.status).json({
                 error: "VirusTotal API error",
-                details: errorText,
+                details: JSON.stringify(analysisResult.data),
             });
         }
 
-        const analysisData = await analysisResponse.json();
+        const analysisData = analysisResult.data;
         const status = analysisData.data?.attributes?.status;
 
-        // If analysis is still in progress, return the status
+        // If analysis is still in progress
         if (status !== "completed") {
             return res.status(200).json({
-                status: status, // "queued" or "in-progress"
+                status: status,
                 completed: false,
             });
         }
 
-        // Analysis is complete — get the full report
+        // Analysis is complete
         const stats = analysisData.data?.attributes?.stats;
         const results = analysisData.data?.attributes?.results;
         const meta = analysisData.data?.meta || {};
 
-        // Try to get the full file/URL report for additional details
+        // Try to get the full report for extra details
         let fullReport = null;
         const fileInfo = meta.file_info;
         const urlInfo = meta.url_info;
 
-        if (fileInfo?.sha256) {
-            const fileResponse = await fetch(
-                `https://www.virustotal.com/api/v3/files/${fileInfo.sha256}`,
-                {
-                    headers: { "x-apikey": apiKey },
+        try {
+            if (fileInfo?.sha256) {
+                const fileResult = await vtGet("/api/v3/files/" + fileInfo.sha256, apiKey);
+                if (fileResult.status === 200) {
+                    fullReport = fileResult.data;
                 }
-            );
-            if (fileResponse.ok) {
-                fullReport = await fileResponse.json();
-            }
-        } else if (urlInfo?.id) {
-            const urlResponse = await fetch(
-                `https://www.virustotal.com/api/v3/urls/${urlInfo.id}`,
-                {
-                    headers: { "x-apikey": apiKey },
+            } else if (urlInfo?.id) {
+                const urlResult = await vtGet("/api/v3/urls/" + urlInfo.id, apiKey);
+                if (urlResult.status === 200) {
+                    fullReport = urlResult.data;
                 }
-            );
-            if (urlResponse.ok) {
-                fullReport = await urlResponse.json();
             }
+        } catch (e) {
+            console.error("Full report fetch failed:", e);
+            // Non-critical, continue without it
         }
 
         return res.status(200).json({
@@ -91,6 +113,6 @@ module.exports = async function handler(req, res) {
         });
     } catch (err) {
         console.error("Analysis error:", err);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ error: err.message || "Internal server error" });
     }
 };

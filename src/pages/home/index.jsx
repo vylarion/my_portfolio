@@ -55,21 +55,32 @@ export const Home = () => {
     }
   };
 
+  // Safe JSON parsing — handles HTML error pages gracefully
+  const safeJson = async (response) => {
+    const text = await response.text();
+    try {
+      return JSON.parse(text);
+    } catch (e) {
+      console.error("Non-JSON response:", text.slice(0, 300));
+      throw new Error("Server error — please try again.");
+    }
+  };
+
   // Poll for analysis results
   const pollAnalysis = async (analysisId, scanInput, scanType) => {
     const maxAttempts = 30;
-    const pollInterval = 3000; // 3 seconds
+    const pollInterval = 3000;
 
     for (let i = 0; i < maxAttempts; i++) {
       setScanStatus(
-        i === 0 ? "Submitting to VirusTotal..." : `Analyzing... (${i * 3}s)`
+        i === 0 ? "Submitting to VirusTotal..." : "Analyzing... (" + (i * 3) + "s)"
       );
 
       await new Promise((resolve) => setTimeout(resolve, pollInterval));
 
       try {
-        const response = await fetch(`/api/analysis?id=${encodeURIComponent(analysisId)}`);
-        const data = await response.json();
+        const response = await fetch("/api/analysis?id=" + encodeURIComponent(analysisId));
+        const data = await safeJson(response);
 
         if (!response.ok) {
           throw new Error(data.error || "Failed to get analysis");
@@ -80,8 +91,8 @@ export const Home = () => {
           setScanStatus("");
           navigate("/scan-results", {
             state: {
-              scanType,
-              scanInput,
+              scanType: scanType,
+              scanInput: scanInput,
               analysisData: data.analysis,
               fullReport: data.fullReport,
             },
@@ -90,11 +101,9 @@ export const Home = () => {
         }
       } catch (err) {
         console.error("Poll error:", err);
-        // Continue polling unless it's a critical error
       }
     }
 
-    // Timeout
     setIsScanning(false);
     setScanStatus("");
     setError("Analysis timed out. Please try again.");
@@ -119,7 +128,6 @@ export const Home = () => {
       if (scanMode === "file") {
         setScanStatus("Uploading file...");
 
-        // Read file as array buffer and send to our API
         const buffer = await selectedFile.arrayBuffer();
 
         const response = await fetch("/api/scan-file", {
@@ -131,13 +139,12 @@ export const Home = () => {
           body: buffer,
         });
 
-        const data = await response.json();
+        const data = await safeJson(response);
 
         if (!response.ok) {
           throw new Error(data.error || "Failed to upload file");
         }
 
-        // Poll for results
         await pollAnalysis(data.analysisId, selectedFile.name, "file");
       } else {
         setScanStatus("Submitting URL...");
@@ -150,13 +157,12 @@ export const Home = () => {
           body: JSON.stringify({ url: urlInput }),
         });
 
-        const data = await response.json();
+        const data = await safeJson(response);
 
         if (!response.ok) {
           throw new Error(data.error || "Failed to submit URL");
         }
 
-        // Poll for results
         await pollAnalysis(data.analysisId, urlInput, "url");
       }
     } catch (err) {
@@ -222,14 +228,14 @@ export const Home = () => {
                 <div className="scanner-card">
                   <div className="scanner-tabs">
                     <button
-                      className={`scanner-tab ${scanMode === "file" ? "active" : ""}`}
+                      className={"scanner-tab " + (scanMode === "file" ? "active" : "")}
                       onClick={() => switchMode("file")}
                       disabled={isScanning}
                     >
                       File Scan
                     </button>
                     <button
-                      className={`scanner-tab ${scanMode === "url" ? "active" : ""}`}
+                      className={"scanner-tab " + (scanMode === "url" ? "active" : "")}
                       onClick={() => switchMode("url")}
                       disabled={isScanning}
                     >
@@ -240,7 +246,7 @@ export const Home = () => {
                   <div className="scanner-body">
                     {scanMode === "file" ? (
                       <div
-                        className={`scanner-dropzone ${isDragging ? "dragging" : ""} ${selectedFile ? "has-file" : ""}`}
+                        className={"scanner-dropzone " + (isDragging ? "dragging " : "") + (selectedFile ? "has-file" : "")}
                         onDragOver={handleDragOver}
                         onDragLeave={handleDragLeave}
                         onDrop={handleDrop}

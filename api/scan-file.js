@@ -1,7 +1,34 @@
 // Vercel Serverless Function: File Scan
 // Receives a file upload and submits it to VirusTotal for scanning
+const https = require("https");
 
-module.exports = async function handler(req, res) {
+function vtRequest(options, body) {
+    return new Promise((resolve, reject) => {
+        const req = https.request(options, (res) => {
+            let data = "";
+            res.on("data", (chunk) => (data += chunk));
+            res.on("end", () => {
+                try {
+                    resolve({ status: res.statusCode, data: JSON.parse(data) });
+                } catch (e) {
+                    reject(new Error("Invalid JSON from VirusTotal: " + data.slice(0, 200)));
+                }
+            });
+        });
+        req.on("error", reject);
+        if (body) req.write(body);
+        req.end();
+    });
+}
+
+module.exports = async (req, res) => {
+    // CORS
+    res.setHeader("Access-Control-Allow-Origin", "*");
+
+    if (req.method === "OPTIONS") {
+        return res.status(200).end();
+    }
+
     if (req.method !== "POST") {
         return res.status(405).json({ error: "Method not allowed" });
     }
@@ -12,62 +39,61 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-        // Read the raw body as a buffer
+        // Read the raw body
         const chunks = [];
-        for await (const chunk of req) {
-            chunks.push(chunk);
-        }
+        await new Promise((resolve, reject) => {
+            req.on("data", (chunk) => chunks.push(chunk));
+            req.on("end", resolve);
+            req.on("error", reject);
+        });
         const buffer = Buffer.concat(chunks);
 
-        // Forward the file to VirusTotal as multipart/form-data
+        if (buffer.length === 0) {
+            return res.status(400).json({ error: "No file data received" });
+        }
+
+        // Build multipart form data
         const boundary = "----VTBoundary" + Date.now();
         const filename = req.headers["x-filename"] || "uploaded_file";
 
-        const formDataParts = [
-            `--${boundary}\r\n`,
-            `Content-Disposition: form-data; name="file"; filename="${filename}"\r\n`,
-            `Content-Type: application/octet-stream\r\n\r\n`,
-        ];
+        const header = Buffer.from(
+            `--${boundary}\r\nContent-Disposition: form-data; name="file"; filename="${filename}"\r\nContent-Type: application/octet-stream\r\n\r\n`
+        );
+        const footer = Buffer.from(`\r\n--${boundary}--\r\n`);
+        const formBody = Buffer.concat([header, buffer, footer]);
 
-        const formDataEnd = `\r\n--${boundary}--\r\n`;
-
-        const formBody = Buffer.concat([
-            Buffer.from(formDataParts.join("")),
-            buffer,
-            Buffer.from(formDataEnd),
-        ]);
-
-        const vtResponse = await fetch("https://www.virustotal.com/api/v3/files", {
-            method: "POST",
-            headers: {
-                "x-apikey": apiKey,
-                "Content-Type": `multipart/form-data; boundary=${boundary}`,
+        // Upload to VirusTotal
+        const vtResult = await vtRequest(
+            {
+                hostname: "www.virustotal.com",
+                path: "/api/v3/files",
+                method: "POST",
+                headers: {
+                    "x-apikey": apiKey,
+                    "Content-Type": `multipart/form-data; boundary=${boundary}`,
+                    "Content-Length": formBody.length,
+                },
             },
-            body: formBody,
-        });
+            formBody
+        );
 
-        if (!vtResponse.ok) {
-            const errorText = await vtResponse.text();
-            console.error("VT file upload error:", vtResponse.status, errorText);
-            return res.status(vtResponse.status).json({
+        if (vtResult.status >= 400) {
+            return res.status(vtResult.status).json({
                 error: "VirusTotal API error",
-                details: errorText,
+                details: JSON.stringify(vtResult.data),
             });
         }
 
-        const data = await vtResponse.json();
-
         return res.status(200).json({
-            analysisId: data.data?.id,
+            analysisId: vtResult.data?.data?.id,
             type: "file",
         });
     } catch (err) {
         console.error("Scan file error:", err);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ error: err.message || "Internal server error" });
     }
 };
 
-// Disable body parsing so we get the raw buffer
 module.exports.config = {
     api: {
         bodyParser: false,
