@@ -31,10 +31,9 @@ section {
 }
 
 .intro_sec {
-    height: calc(100vh - 60px);
-    min-height: 700px;
     height: 100vh;
     margin-top: -60px;
+    overflow: hidden;
 }
 
 @media (max-width:991.98px) {
@@ -51,6 +50,7 @@ section {
 
 .intro_sec .text {
     margin-left: 2rem;
+    padding-top: 27vh;
 }
 
 .intro_sec .h_bg-image {
@@ -71,6 +71,8 @@ section {
 
     .intro_sec .text {
         margin-left: 0;
+        padding-top: 30px;
+        padding-bottom: 30px;
     }
 
     .intro_sec .h_bg-image {
@@ -79,7 +81,7 @@ section {
 }
 
 .intro_sec .intro {
-    max-width: 450px;
+    max-width: 520px;
     margin: 0 auto;
 }
 
@@ -104,7 +106,7 @@ section {
 
 .intro_sec .text h1 {
     font-size: 30px;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
     font-weight: 700;
 }
 
@@ -129,7 +131,8 @@ section {
 .intro_sec .h_bg-image {
     background-size: cover;
     background-position: center;
-    min-height: 700px;
+    min-height: 0;
+    height: 100%;
     position: relative;
 }
 
@@ -267,4 +270,363 @@ section {
 
 .intro_sec .h_bg-image {
     filter: saturate(0.5);
+}
+
+/* ── Scanner Card ─────────────────────────────────────── */
+
+.scanner-intro {
+    font-size: 15px;
+    opacity: 0.85;
+    letter-spacing: 0.02em;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.scanner-tagline {
+    font-size: 13px;
+    opacity: 0.5;
+    letter-spacing: 0.03em;
+    margin-top: 24px;
+    margin-bottom: 14px;
+}
+
+.scanner-card {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 14px 16px;
+    margin-bottom: 28px;
+    transition: border-color 0.3s ease;
+}
+
+.scanner-card:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Tabs */
+.scanner-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.scanner-tab {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    padding: 8px 0;
+    font-family: 'Raleway', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    opacity: 0.4;
+    transition: opacity 0.3s ease, border-color 0.3s ease;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+}
+
+.scanner-tab:hover {
+    opacity: 0.7;
+}
+
+.scanner-tab.active {
+    opacity: 1;
+    border-bottom-color: var(--secondary-color);
+}
+
+/* Scanner Body */
+.scanner-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Dropzone */
+.scanner-dropzone {
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    padding: 10px 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.scanner-dropzone:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.scanner-dropzone.dragging {
+    border-color: var(--secondary-color);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.scanner-dropzone.has-file {
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.dropzone-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.dropzone-inline {
+    flex-direction: row;
+    gap: 8px;
+}
+
+.dropzone-icon {
+    font-size: 16px;
+    opacity: 0.5;
+}
+
+.dropzone-text {
+    font-size: 13px;
+    opacity: 0.6;
+    font-family: 'Raleway', sans-serif;
+}
+
+.dropzone-hint {
+    font-size: 11px;
+    opacity: 0.35;
+    font-family: 'Raleway', sans-serif;
+}
+
+.dropzone-filename {
+    font-size: 13px;
+    font-weight: 600;
+    word-break: break-all;
+    font-family: 'Raleway', sans-serif;
+}
+
+.dropzone-size {
+    font-size: 11px;
+    opacity: 0.5;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* URL Input */
+.scanner-url-input .form-control {
+    padding: 12px 14px;
+    line-height: 1.5;
+    color: var(--text-color);
+    background-color: transparent;
+    border-radius: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 13px;
+    font-family: 'Raleway', sans-serif;
+    transition: border-color 0.3s ease;
+}
+
+.scanner-url-input .form-control:focus {
+    border-color: var(--secondary-color);
+    box-shadow: none;
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+.scanner-url-input .form-control::placeholder {
+    opacity: 0.4;
+    color: var(--text-color);
+}
+
+/* Scan Button */
+.scanner-btn {
+    align-self: flex-end;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 28px;
+}
+
+.scanner-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.scanner-btn:hover {
+    box-shadow: 5px 5px 0px var(--text-color), -5px -5px 0px var(--text-color);
+    color: #000;
+}
+
+/* Error */
+.scanner-error {
+    color: var(--text-color-3);
+    font-size: 12px;
+    margin: 0;
+    font-family: 'Raleway', sans-serif;
+}
+
+.scanner-status {
+    color: var(--text-color);
+    font-size: 12px;
+    margin: 0;
+    opacity: 0.5;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* Results */
+.scanner-result {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 14px;
+    animation: resultFadeIn 0.4s ease;
+}
+
+@keyframes resultFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.result-status {
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Raleway', sans-serif;
+    letter-spacing: 0.03em;
+}
+
+.result-status.clean {
+    color: #4ade80;
+}
+
+.result-status.threats {
+    color: var(--text-color-3);
+}
+
+.result-ratio {
+    font-size: 11px;
+    opacity: 0.5;
+    font-family: 'Raleway', sans-serif;
+}
+
+.result-name {
+    font-size: 12px;
+    opacity: 0.6;
+    margin: 0;
+    word-break: break-all;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* ── Light Theme ──────────────────────────────────────── */
+
+[data-theme="light"] .scanner-card {
+    border-color: rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .scanner-card:hover {
+    border-color: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="light"] .scanner-tabs {
+    border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .scanner-tab {
+    color: var(--secondary-color);
+}
+
+[data-theme="light"] .scanner-dropzone {
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .scanner-dropzone:hover {
+    border-color: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.02);
+}
+
+[data-theme="light"] .scanner-dropzone.dragging {
+    border-color: var(--secondary-color);
+    background: rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .scanner-dropzone.has-file {
+    border-color: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="light"] .scanner-url-input .form-control {
+    border-color: rgba(0, 0, 0, 0.2);
+    color: var(--text-color);
+}
+
+[data-theme="light"] .scanner-url-input .form-control:focus {
+    border-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+[data-theme="light"] .scanner-url-input .form-control::placeholder {
+    color: var(--text-color);
+    opacity: 0.4;
+}
+
+[data-theme="light"] .scanner-result {
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ── Responsive ───────────────────────────────────────── */
+
+@media (max-width: 991.98px) {
+    .scanner-card {
+        padding: 14px;
+        margin-bottom: 20px;
+    }
+
+    .scanner-dropzone {
+        padding: 12px;
+    }
+
+    .scanner-btn {
+        align-self: stretch;
+        text-align: center;
+    }
+
+    .scanner-intro {
+        font-size: 14px;
+    }
+
+    .scanner-tagline {
+        margin-top: 18px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .scanner-card {
+        padding: 12px;
+    }
+
+    .scanner-tab {
+        font-size: 11px;
+        padding: 6px 0;
+    }
+
+    .scanner-url-input .form-control {
+        padding: 10px 12px;
+        font-size: 12px;
+    }
+
+    .dropzone-text {
+        font-size: 12px;
+    }
+
+    .scanner-btn {
+        font-size: 11px;
+        padding: 5px 20px;
+    }
 }

@@ -12,7 +12,7 @@ const introdata = {
         third: "Purple Teamer",
         fourth: "Security Analyst",
     },
-    description: "I am a cybersecurity professional with experience in penetration testing and security operations. I am passionate about cybersecurity and am always looking for new challenges.",
+    description: "Scan files for malware & check websites for threats.",
     your_img_url: "https://res.cloudinary.com/dduwbdgc1/image/upload/v1757512792/DSC02407-2_lw2wzq.jpg",
 };
 
