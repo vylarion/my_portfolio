@@ -7,6 +7,7 @@ import {
   meta,
   worktimeline,
   skills,
+  resumeUrl,
 } from "../../content_option";
 
 export const About = () => {
@@ -54,6 +55,15 @@ export const About = () => {
                 })}
               </tbody>
             </table>
+            <a
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="resume-btn"
+            >
+              View Resume
+              <span className="resume-btn-arrow">→</span>
+            </a>
           </Col>
         </Row>
       </Container>

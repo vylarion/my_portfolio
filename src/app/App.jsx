@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   BrowserRouter as Router,
@@ -7,12 +7,12 @@ import {
 import withRouter from "../hooks/withRouter.jsx";
 import AppRoutes from "./routes.jsx";
 import Headermain from "../header/index.jsx";
-import AnimatedCursor  from "../hooks/AnimatedCursor.jsx";
+import AnimatedCursor from "../hooks/AnimatedCursor.jsx";
 import "./App.css";
 
 function _ScrollToTop(props) {
   const { pathname } = useLocation();
-  useEffect(() => {
+  React.useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
   return props.children;

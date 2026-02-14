@@ -72,9 +72,7 @@ export const Home = () => {
     const pollInterval = 3000;
 
     for (let i = 0; i < maxAttempts; i++) {
-      setScanStatus(
-        i === 0 ? "Submitting to VirusTotal..." : "Analyzing... (" + (i * 3) + "s)"
-      );
+      setScanStatus("Analyzing... (" + (i * 3) + "s)");
 
       await new Promise((resolve) => setTimeout(resolve, pollInterval));
 
@@ -286,6 +284,9 @@ export const Home = () => {
                             setUrlInput(e.target.value);
                             setError("");
                             setScanResult(null);
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" && !isScanning) handleScan();
                           }}
                           disabled={isScanning}
                           id="scanner-url-field"

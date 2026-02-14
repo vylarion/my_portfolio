@@ -82,7 +82,7 @@ const dataprojects = [{
     title: "Portfolio Website",
     category: "Web Development",
     description: "A minimalist portfolio showcasing projects, skills, and professional experience. Features smooth animations, dark mode aesthetics, and a clean, modern interface built with React.",
-    tech: ["React", "JavaScript", "CSS"],
+    tech: ["React", "JavaScript", "VirusTotal API"],
     link: "/",
     img: "https://picsum.photos/400/400?grayscale&random=3",
 }];
@@ -97,6 +97,8 @@ const contactConfig = {
     YOUR_TEMPLATE_ID: "template_id",
     YOUR_USER_ID: "user_id",
 };
+
+const resumeUrl = "https://drive.google.com/file/d/1rd2XID8fIJU70QGq9s4n1dMcPHk5jWUR/view?usp=sharing";
 
 const socialprofils = {
     github: "https://github.com/vylarion",
@@ -115,4 +117,5 @@ export {
     contactConfig,
     socialprofils,
     logotext,
+    resumeUrl,
 };
