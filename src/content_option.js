@@ -88,14 +88,14 @@ const dataprojects = [{
 }];
 
 const contactConfig = {
-    YOUR_EMAIL: "vylarionhx@gmail.com",
+    YOUR_EMAIL: "2k4samya@gmail.com",
     YOUR_FONE: "+91 7980026875",
     description: "Please don't contact. I am very lazy! ",
     // creat an emailjs.com account 
     // check out this tutorial https://www.emailjs.com/docs/examples/reactjs/
-    YOUR_SERVICE_ID: "service_id",
-    YOUR_TEMPLATE_ID: "template_id",
-    YOUR_USER_ID: "user_id",
+    YOUR_SERVICE_ID: "service_pilla1f",
+    YOUR_TEMPLATE_ID: "template_oi9w33l",
+    YOUR_USER_ID: "yNV6iQrzjRI8qOULT",
 };
 
 const resumeUrl = "https://drive.google.com/file/d/1rd2XID8fIJU70QGq9s4n1dMcPHk5jWUR/view?usp=sharing";

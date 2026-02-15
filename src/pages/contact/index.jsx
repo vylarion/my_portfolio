@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as emailjs from "emailjs-com";
 import "./style.css";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { meta } from "../../content_option";
-import { Container, Row, Col, Alert } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { contactConfig } from "../../content_option";
 
 export const ContactUs = () => {
@@ -39,21 +39,22 @@ export const ContactUs = () => {
         (result) => {
           setFormdata({
             loading: false,
-            alertmessage: "SUCCESS! ,Thankyou for your messege",
+            alertmessage: "Message sent successfully",
             variant: "success",
             show: true,
           });
         },
         (error) => {
           setFormdata({
-            alertmessage: `Faild to send!,${error.text}`,
+            loading: false,
+            alertmessage: "Failed to send. Please try again.",
             variant: "danger",
             show: true,
           });
-          document.getElementsByClassName("co_alert")[0].scrollIntoView();
         }
       );
   };
+  const [toastExiting, setToastExiting] = useState(false);
 
   const handleChange = (e) => {
     setFormdata({
@@ -61,6 +62,23 @@ export const ContactUs = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+  useEffect(() => {
+    if (formData.show) {
+      setToastExiting(false);
+      const fadeTimer = setTimeout(() => {
+        setToastExiting(true);
+      }, 2600);
+      const removeTimer = setTimeout(() => {
+        setFormdata((prev) => ({ ...prev, show: false }));
+        setToastExiting(false);
+      }, 3000);
+      return () => {
+        clearTimeout(fadeTimer);
+        clearTimeout(removeTimer);
+      };
+    }
+  }, [formData.show]);
 
   return (
     <HelmetProvider>
@@ -77,18 +95,13 @@ export const ContactUs = () => {
           </Col>
         </Row>
         <Row className="sec_sp">
-          <Col lg="12">
-            <Alert
-              //show={formData.show}
-              variant={formData.variant}
-              className={`rounded-0 co_alert ${formData.show ? "d-block" : "d-none"
-                }`}
-              onClose={() => setFormdata({ show: false })}
-              dismissible
-            >
-              <p className="my-0">{formData.alertmessage}</p>
-            </Alert>
-          </Col>
+          {formData.show && (
+            <Col lg="12">
+              <div className={`contact-toast contact-toast--${formData.variant}${toastExiting ? " contact-toast--exit" : ""}`}>
+                {formData.alertmessage}
+              </div>
+            </Col>
+          )}
           <Col lg="5" className="mb-5">
             <h3 className="color_sec py-4">Get in touch</h3>
             <address>
